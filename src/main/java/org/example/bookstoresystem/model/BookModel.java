@@ -1,17 +1,20 @@
 package org.example.bookstoresystem.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_books")
 @Data
+@EqualsAndHashCode(of = "id")
 public class BookModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "title")
@@ -20,8 +23,17 @@ public class BookModel {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
+
     @Column(name = "price")
     private double price;
 
-    //TODO: add attribute "author" and manyToMany relationship
+    @ManyToMany
+    @JoinTable(
+            name = "author",
+            joinColumns = @JoinColumn(name = "bookId"),
+            inverseJoinColumns = @JoinColumn(name = "authorId")
+    )
+    private Set<AuthorModel> author;
 }
