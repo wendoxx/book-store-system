@@ -23,6 +23,9 @@ public class BookModel {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "isbn")
+    private String isbn;
+
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
