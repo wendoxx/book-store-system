@@ -1,5 +1,6 @@
 package org.example.bookstoresystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ public class AuthorModel {
     @Column(name = "name")
     private String name;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "author")
     private Set<BookModel> books;
 }

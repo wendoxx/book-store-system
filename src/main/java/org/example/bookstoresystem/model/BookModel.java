@@ -1,10 +1,12 @@
 package org.example.bookstoresystem.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,6 +34,7 @@ public class BookModel {
     @Column(name = "price")
     private double price;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "author",
