@@ -1,16 +1,14 @@
 package org.example.bookstoresystem.service;
 
+import jakarta.transaction.Transactional;
 import org.example.bookstoresystem.dto.request.BookRequestDTO;
 import org.example.bookstoresystem.dto.response.BookResponseDTO;
-import org.example.bookstoresystem.model.AuthorModel;
 import org.example.bookstoresystem.model.BookModel;
 import org.example.bookstoresystem.repository.AuthorRepository;
 import org.example.bookstoresystem.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +26,7 @@ public class BookService {
                 .orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
+    @Transactional
     public BookModel saveAndUpdateBook(BookRequestDTO bookRequestDTO) {
         BookModel book;
 
@@ -46,5 +45,14 @@ public class BookService {
         book.setIsbn(bookRequestDTO.getIsbn());
 
         return bookRepository.save(book);
+    }
+
+    public BookResponseDTO getBookByTitle(String title){
+        return bookRepository.findByTitle(title)
+                .map(BookResponseDTO::new).orElseThrow(() -> new RuntimeException("Book not found."));
+    }
+
+    public void deleteBookById(Long id){
+        bookRepository.deleteById(id);
     }
 }
