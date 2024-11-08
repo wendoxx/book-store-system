@@ -18,7 +18,7 @@ import java.util.List;
 public class UserModel implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "username")
@@ -38,9 +38,9 @@ public class UserModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else{
-            return List.of(new SimpleGrantedAuthority("USER_ROLE"));
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
     }
 
