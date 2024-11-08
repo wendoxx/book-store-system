@@ -7,6 +7,8 @@ import org.example.bookstoresystem.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class AuthorService {
@@ -33,6 +35,10 @@ public class AuthorService {
         return authorRepository.findByName(name)
                 .map(AuthorResponseDTO::new)
                 .orElseThrow(() -> new RuntimeException("Author not found"));
+    }
+
+    public List<AuthorResponseDTO> getAllAuthors(){
+        return authorRepository.findAll().stream().map(AuthorResponseDTO::new).toList();
     }
 
     public void deleteAuthorById(Long id){
