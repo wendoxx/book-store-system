@@ -35,13 +35,15 @@ public class SecurityFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        filterChain.doFilter(request, response);
     }
 
     public String recoverToken(HttpServletRequest httpServletRequest){
         var authHeader = httpServletRequest.getHeader("Authorization");
         if (authHeader == null){
             return null;
+        } else {
+            return authHeader.replace("Bearer ", "");
         }
-        return authHeader.replace("Bearer ", "");
     }
 }
