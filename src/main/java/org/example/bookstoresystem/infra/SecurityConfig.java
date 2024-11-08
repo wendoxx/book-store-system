@@ -37,7 +37,6 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.GET, "/api/v1/author/by-name").permitAll() // Acesso público
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/author/delete-author/{id   }").hasRole("ADMIN")
 
-                        // Autorizações para o endpoint de Book
                         .requestMatchers(HttpMethod.POST, "/api/v1/book").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/book").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/book/all-books").permitAll()
