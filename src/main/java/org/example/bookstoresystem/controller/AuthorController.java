@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/v1/author")
+@RequestMapping("/api/v1/author")
 public class AuthorController {
 
     @Autowired
@@ -31,12 +33,17 @@ public class AuthorController {
     }
 
     @GetMapping("/by-name")
-    public ResponseEntity<AuthorResponseDTO> getAuthorByName(@RequestBody String name){
+    public ResponseEntity<AuthorResponseDTO> getAuthorByName(@RequestParam String name){
         return ResponseEntity.ok().body(authorService.getAuthorByName(name));
     }
 
-    @DeleteMapping("/delete-author")
-    public ResponseEntity<AuthorResponseDTO> deleteAuthorById(@RequestBody Long id){
+    @GetMapping("/all-authors")
+    public ResponseEntity<List<AuthorResponseDTO>> getAllAuthors(){
+        return ResponseEntity.ok(authorService.getAllAuthors());
+    }
+
+    @DeleteMapping("/delete-author/{id}")
+    public ResponseEntity<AuthorResponseDTO> deleteAuthorById(@PathVariable Long id){
         authorService.deleteAuthorById(id);
         return ResponseEntity.noContent().build();
     }
