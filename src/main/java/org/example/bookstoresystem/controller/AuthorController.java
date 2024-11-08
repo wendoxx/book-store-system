@@ -19,12 +19,12 @@ public class AuthorController {
 
     @PostMapping
     public ResponseEntity<AuthorModel> saveAuthor(@RequestBody AuthorRequestDTO authorRequestDTO) {
-        return ResponseEntity.ok().body(authorService.saveAuthor(authorRequestDTO));
+        return ResponseEntity.ok().body(authorService.saveAndUpdateAuthor(authorRequestDTO));
     }
 
     @PutMapping
     public ResponseEntity<AuthorModel> updateAuthor(@RequestBody AuthorRequestDTO authorRequestDTO) {
-        return ResponseEntity.ok().body(authorService.saveAuthor(authorRequestDTO));
+        return ResponseEntity.ok().body(authorService.saveAndUpdateAuthor(authorRequestDTO));
     }
 
     @GetMapping("/by-id/{id}")

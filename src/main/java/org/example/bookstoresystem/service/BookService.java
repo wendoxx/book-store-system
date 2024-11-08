@@ -1,6 +1,8 @@
 package org.example.bookstoresystem.service;
 
 import jakarta.transaction.Transactional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.bookstoresystem.dto.request.BookRequestDTO;
 import org.example.bookstoresystem.dto.response.BookResponseDTO;
 import org.example.bookstoresystem.model.BookModel;
@@ -21,10 +23,16 @@ public class BookService {
     @Autowired
     AuthorRepository authorRepository;
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public BookResponseDTO getBookById(Long id){
+        LOGGER.info("Getting book...");
         return bookRepository.findById(id)
                 .map(BookResponseDTO::new)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> {
+                    LOGGER.error("Book not found.");
+                    return new RuntimeException("Book not found");
+                });
     }
 
     @Transactional
@@ -32,8 +40,10 @@ public class BookService {
         BookModel book;
 
         if(bookRequestDTO.getId() != null && bookRepository.existsById(bookRequestDTO.getId())){
+            LOGGER.info("Updating book...");
            book = bookRepository.findById(bookRequestDTO.getId()).get();
         } else {
+            LOGGER.info("Saving book...");
             book = new BookModel();
         }
 
@@ -49,15 +59,21 @@ public class BookService {
     }
 
     public BookResponseDTO getBookByTitle(String title){
+        LOGGER.info("Getting book...");
         return bookRepository.findByTitle(title)
-                .map(BookResponseDTO::new).orElseThrow(() -> new RuntimeException("Book not found."));
+                .map(BookResponseDTO::new).orElseThrow(() -> {
+                    LOGGER.error("Book not found.");
+                    return new RuntimeException("Book not found.");
+                });
     }
 
     public List<BookResponseDTO> getAllBooks(){
+        LOGGER.info("Getting all books...");
         return bookRepository.findAll().stream().map(BookResponseDTO::new).toList();
     }
 
     public void deleteBookById(Long id){
+        LOGGER.info("Deleting book...");
         bookRepository.deleteById(id);
     }
 }

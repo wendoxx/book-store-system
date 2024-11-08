@@ -1,5 +1,6 @@
 package org.example.bookstoresystem.service;
 
+import jakarta.transaction.Transactional;
 import org.example.bookstoresystem.dto.request.AuthorRequestDTO;
 import org.example.bookstoresystem.dto.response.AuthorResponseDTO;
 import org.example.bookstoresystem.model.AuthorModel;
@@ -16,8 +17,15 @@ public class AuthorService {
     @Autowired
     AuthorRepository authorRepository;
 
-    public AuthorModel saveAuthor(AuthorRequestDTO authorRequestDTO){
-        AuthorModel author = new AuthorModel();
+    @Transactional
+    public AuthorModel saveAndUpdateAuthor(AuthorRequestDTO authorRequestDTO){
+        AuthorModel author;
+
+        if (authorRequestDTO.getId() != null && authorRepository.existsById(authorRequestDTO.getId())){
+            author = authorRepository.findById(authorRequestDTO.getId()).get();
+        }else {
+            author = new AuthorModel();
+        }
 
         author.setId(authorRequestDTO.getId());
         author.setName(authorRequestDTO.getName());
