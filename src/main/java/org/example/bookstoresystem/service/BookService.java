@@ -9,6 +9,7 @@ import org.example.bookstoresystem.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,6 +51,10 @@ public class BookService {
     public BookResponseDTO getBookByTitle(String title){
         return bookRepository.findByTitle(title)
                 .map(BookResponseDTO::new).orElseThrow(() -> new RuntimeException("Book not found."));
+    }
+
+    public List<BookResponseDTO> getAllBooks(){
+        return bookRepository.findAll().stream().map(BookResponseDTO::new).toList();
     }
 
     public void deleteBookById(Long id){
