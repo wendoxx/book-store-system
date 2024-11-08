@@ -1,7 +1,6 @@
 package org.example.bookstoresystem.controller;
 
 import org.example.bookstoresystem.dto.request.BookRequestDTO;
-import org.example.bookstoresystem.dto.response.AuthorResponseDTO;
 import org.example.bookstoresystem.dto.response.BookResponseDTO;
 import org.example.bookstoresystem.model.BookModel;
 import org.example.bookstoresystem.service.BookService;
