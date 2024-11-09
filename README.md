@@ -22,4 +22,4 @@ A autenticação e a autorização é feita com os JWTs (Json Web Tokens). Dentr
 Para clonar o repositório, execute o seguinte comando no terminal:
 
 ```bash
-git clone https://github.com/wendoxx/library-api.git
+git clone git@github.com:wendoxx/library-api.git
